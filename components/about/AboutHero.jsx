@@ -23,9 +23,9 @@ export default function AboutHero() {
         </div>
 
         <div className="relative">
-          <div className="h-[290px] overflow-hidden sm:h-[380px] lg:h-[420px]">
+          <div className="h-[290px] rounded-lg overflow-hidden sm:h-[380px] lg:h-[490px]">
             <img
-              src="/images/hero/heroImage.png"
+              src="/images/serv3.png"
               alt="Framed artwork in the Anonymous Framer studio"
               className="h-full w-full object-cover"
             />
