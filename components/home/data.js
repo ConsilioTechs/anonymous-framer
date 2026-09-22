@@ -63,11 +63,7 @@ export const process = [
 
 export const galleryImages = [
   projectImages[0],
-  {
-    src: "https://images.unsplash.com/photo-1591122947157-26bad3a117d2?auto=format&fit=crop&w=700&q=80",
-    className: "h-52",
-    alt: "Seal and identity print",
-  },
+  projectImages[1],
   projectImages[2],
   projectImages[3],
   projectImages[4],
