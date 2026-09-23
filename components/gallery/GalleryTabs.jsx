@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { itemsByTab, tabs } from "./data";
 
 const sizeClass = {
@@ -178,30 +178,86 @@ export default function GalleryTabs() {
 
 function GalleryItem({ item, layoutClass, onOpen }) {
   const isVideo = item.type === "video";
+  const containerRef = useRef(null);
+  const [scrollRatio, setScrollRatio] = useState(0);
+
+  useEffect(() => {
+    let rafId;
+
+    const updateScrollRatio = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const winH = window.innerHeight;
+
+      const distFromBottom = winH - rect.top;
+      const totalTravel = winH + rect.height;
+      const ratio = Math.max(0, Math.min(1, distFromBottom / totalTravel));
+
+      setScrollRatio(ratio);
+    };
+
+    const handleScroll = () => {
+      rafId = requestAnimationFrame(updateScrollRatio);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateScrollRatio();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  const enterProgress = Math.max(0, Math.min(1, (scrollRatio - 0.08) / 0.32));
+  const exitProgress = Math.max(0, Math.min(1, (scrollRatio - 0.78) / 0.22));
+  const activeOpacity = Math.min(enterProgress, 1 - exitProgress * 0.35);
+  const clipPercent = Math.round(enterProgress * 125);
+  const translateY = (scrollRatio - 0.5) * -35;
+  const scale = 1.15 - enterProgress * 0.15 + exitProgress * 0.04;
+  const blurPx = Math.round((1 - enterProgress) * 18);
 
   return (
     <button
+      ref={containerRef}
       type="button"
       onClick={onOpen}
       onMouseEnter={isVideo ? playVideoPreview : undefined}
       onMouseLeave={isVideo ? pauseVideoPreview : undefined}
       onFocus={isVideo ? playVideoPreview : undefined}
       onBlur={isVideo ? pauseVideoPreview : undefined}
-      className={`gallery-thumb group relative block overflow-hidden text-left shadow-[0_1px_0_rgba(0,0,0,0.04)] ${
-        isVideo ? "bg-neutral-950" : "bg-white"
-      } ${
-        layoutClass
-      }`}
+      className={`gallery-thumb group relative block overflow-hidden rounded-2xl text-left shadow-lg transition-all duration-500 ease-out ${
+        isVideo ? "bg-neutral-950" : "bg-neutral-900"
+      } ${layoutClass}`}
       aria-label={`Open ${item.alt}`}
+      style={{
+        clipPath: `circle(${clipPercent}% at 50% 50%)`,
+        opacity: activeOpacity,
+        willChange: "transform, opacity, clip-path, filter",
+      }}
     >
+      {/* Background Dissolve Veil */}
+      <div
+        className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-500"
+        style={{
+          opacity: 1 - enterProgress,
+          background: "radial-gradient(circle, rgba(255,59,31,0.2) 0%, rgba(9,9,9,0.9) 75%)",
+          backdropFilter: `blur(${blurPx}px)`,
+        }}
+      />
+
       {isVideo ? (
         <video
           loop
           preload="metadata"
           muted
           playsInline
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           onLoadedMetadata={showVideoPreviewFrame}
+          style={{
+            transform: `translateY(${translateY}px) scale(${scale})`,
+            filter: `blur(${blurPx}px) contrast(${100 + (1 - enterProgress) * 30}%)`,
+          }}
         >
           <source src={`${item.src}#t=0.75`} type="video/mp4" />
         </video>
@@ -209,19 +265,23 @@ function GalleryItem({ item, layoutClass, onOpen }) {
         <img
           src={item.src}
           alt={item.alt}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading="lazy"
+          style={{
+            transform: `translateY(${translateY}px) scale(${scale})`,
+            filter: `blur(${blurPx}px) contrast(${100 + (1 - enterProgress) * 30}%)`,
+          }}
         />
       )}
-      <span className="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/25" />
+      <span className="pointer-events-none absolute inset-0 bg-black/0 transition group-hover:bg-black/25 z-10" />
       {isVideo && (
-        <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
           <span className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-sm transition group-hover:scale-110 group-hover:bg-ember md:h-20 md:w-20">
             <Play size={30} fill="currentColor" strokeWidth={1.8} className="ml-1" />
           </span>
         </span>
       )}
-      <span className="pointer-events-none absolute bottom-4 left-4 translate-y-3 rounded-full bg-white px-4 py-2 text-[0.68rem] font-black uppercase text-ink opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100">
+      <span className="pointer-events-none absolute bottom-4 left-4 z-20 translate-y-3 rounded-full bg-white px-4 py-2 text-[0.68rem] font-black uppercase text-ink opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
         {isVideo ? "Play video" : "View image"}
       </span>
     </button>

@@ -713,3 +713,40 @@ img {
     transform: scaleX(1);
   }
 }
+
+/* Image Mosaic Dissolve Animations */
+.dissolve-container {
+  will-change: transform, opacity, filter;
+}
+
+@keyframes dissolve-shimmer {
+  0% {
+    transform: translateX(-120%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(220%) rotate(25deg);
+  }
+}
+
+.dissolve-shimmer-effect::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%) rotate(25deg);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.group:hover.dissolve-shimmer-effect::after {
+  animation: dissolve-shimmer 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
