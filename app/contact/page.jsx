@@ -201,7 +201,7 @@ export default function ContactPage() {
                     Find <span className="text-ember">Us</span>
                   </p>
                   <p className="mt-3 max-w-[240px] text-sm font-bold leading-6">
-                    shop E23/22 area 7 and 10 information market
+                    shop E23/22 area 7 and 10 informal market
                   </p>
                 </div>
               </div>

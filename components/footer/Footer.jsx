@@ -108,7 +108,7 @@ export default function Footer() {
                   </a>
                 </p>
                 <p className="text-white/80 leading-relaxed font-normal">
-                  shop E23/22 area 7 and 10 information market
+                  shop E23/22 area 7 and 10 informal market
                 </p>
               </div>
 
