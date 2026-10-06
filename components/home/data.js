@@ -2,30 +2,63 @@ export const heroImage =
   "/images/hero/heroImage.png";
 
 export const projectImages = [
+  
   {
-    src: "/images/hg1.png",
+    src: "/images/hg8.jpeg",
     className: "col-span-2 h-60 md:h-80",
-    alt: "Printing showcase project 1",
+    alt: "craft",
   },
   {
-    src: "/images/hg2.png",
-    className: "h-52",
-    alt: "Printing showcase project 2",
+    src: "/images/hg6.jpeg",
+    className: "col-span-2 h-60 md:h-80",
+    alt: "craft",
   },
+  
   {
-    src: "/images/hg3.png",
-    className: "h-52",
-    alt: "Printing showcase project 3",
+    src: "/images/hg7.jpeg",
+    className: "col-span-2 h-60 md:h-80",
+    alt: "craft",
   },
   {
     src: "/images/hg4.png",
     className: "h-52",
-    alt: "Printing showcase project 4",
+    alt: "craft",
   },
+  {
+    src: "/images/hg3.png",
+    className: "h-52",
+    alt: "craft",
+  },
+  {
+    src: "/images/hg9.jpeg",
+    className: "col-span-2 h-60 md:h-80",
+    alt: "craft",
+  },
+  {
+    src: "/images/hg10.jpeg",
+    className: "col-span-2 h-60 md:h-80",
+    alt: "craft",
+  },
+  {
+    src: "/images/hg1.png",
+    className: "col-span-2 h-60 md:h-80",
+    alt: "craft",
+  },
+  {
+    src: "/images/hg2.png",
+    className: "h-52",
+    alt: "craft",
+  },
+  {
+    src: "/images/hg3.png",
+    className: "h-52",
+    alt: "craft",
+  },
+  
   {
     src: "/images/hg5.png",
     className: "h-52",
-    alt: "Printing showcase project 5",
+    alt: "craft",
   },
 ];
 
@@ -62,9 +95,9 @@ export const process = [
 ];
 
 export const galleryImages = [
-  projectImages[0],
-  projectImages[1],
   projectImages[2],
-  projectImages[3],
+  projectImages[5],
+  projectImages[7],
+  projectImages[10],
   projectImages[4],
 ];

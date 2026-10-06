@@ -3,6 +3,11 @@
 import React from "react";
 
 const partners = [
+   {
+    name: "Safi's Spa",
+    src: "/images/partner.png",
+    alt: "Safi's Spa Logo",
+  },
   {
     name: "Safi's Spa",
     src: "/images/partner1.png",
@@ -22,6 +27,31 @@ const partners = [
     name: "Lagos Bistro",
     src: "/images/partner4.png",
     alt: "Lagos Bistro Logo",
+  },
+   {
+    name: "Safi's Spa",
+    src: "/images/partner5.png",
+    alt: "Safi's Spa Logo",
+  },
+   {
+    name: "Safi's Spa",
+    src: "/images/partner6.png",
+    alt: "Safi's Spa Logo",
+  },
+   {
+    name: "Safi's Spa",
+    src: "/images/partner7.png",
+    alt: "Safi's Spa Logo",
+  },
+   {
+    name: "Safi's Spa",
+    src: "/images/partner8.png",
+    alt: "Safi's Spa Logo",
+  },
+   {
+    name: "Safi's Spa",
+    src: "/images/partner9.png",
+    alt: "Safi's Spa Logo",
   },
 ];
 
